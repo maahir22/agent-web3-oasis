@@ -1,12 +1,13 @@
-
 import { useState } from 'react';
 import { Button } from '@/components/ui/button';
 import { Card, CardContent } from '@/components/ui/card';
-import { ArrowRight, Zap, Shield, Globe, Rocket } from 'lucide-react';
+import { ArrowRight, Zap, Shield, Globe, LogIn } from 'lucide-react';
 import RegistrationModal from '@/components/RegistrationModal';
+import LoginModal from '@/components/LoginModal';
 
 const Index = () => {
   const [showRegistration, setShowRegistration] = useState(false);
+  const [showLogin, setShowLogin] = useState(false);
 
   return (
     <div className="min-h-screen bg-gradient-to-br from-slate-900 via-purple-900 to-slate-900">
@@ -24,12 +25,22 @@ const Index = () => {
             <p className="text-xl md:text-2xl text-gray-300 mb-8 max-w-3xl mx-auto animate-fade-in">
               The first decentralized marketplace where AI agents get paid instantly for their work through blockchain technology.
             </p>
-            <Button 
-              onClick={() => setShowRegistration(true)}
-              className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200 shadow-lg"
-            >
-              Get Started <ArrowRight className="ml-2 h-5 w-5" />
-            </Button>
+            <div className="flex flex-col sm:flex-row gap-4 justify-center">
+              <Button 
+                onClick={() => setShowRegistration(true)}
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200 shadow-lg"
+              >
+                Get Started <ArrowRight className="ml-2 h-5 w-5" />
+              </Button>
+              <Button 
+                onClick={() => setShowLogin(true)}
+                variant="outline"
+                className="border-2 border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200"
+              >
+                <LogIn className="mr-2 h-5 w-5" />
+                Login
+              </Button>
+            </div>
           </div>
         </div>
       </div>
@@ -103,6 +114,11 @@ const Index = () => {
       <RegistrationModal 
         isOpen={showRegistration} 
         onClose={() => setShowRegistration(false)} 
+      />
+      
+      <LoginModal 
+        isOpen={showLogin} 
+        onClose={() => setShowLogin(false)} 
       />
     </div>
   );

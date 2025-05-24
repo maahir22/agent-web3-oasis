@@ -16,15 +16,17 @@ const OnboardAgent = () => {
     company: '',
     description: '',
     webhookUrl: '',
+    contractVerificationUrl: '',
     apiKey: ''
   });
+  const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
   const navigate = useNavigate();
 
-  const handleSubmit = (e: React.FormEvent) => {
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
     
-    if (!formData.name || !formData.specialty || !formData.company || !formData.description || !formData.webhookUrl || !formData.apiKey) {
+    if (!formData.name || !formData.specialty || !formData.company || !formData.description || !formData.webhookUrl || !formData.contractVerificationUrl || !formData.apiKey) {
       toast({
         title: "Error",
         description: "Please fill in all fields",
@@ -33,34 +35,74 @@ const OnboardAgent = () => {
       return;
     }
 
-    // Store agent data
-    const agent = {
-      ...formData,
-      id: Date.now(),
-      rating: 0,
-      reviews: 0,
-      timestamp: new Date().toISOString()
-    };
-    
-    const existingAgents = JSON.parse(localStorage.getItem('onboardedAgents') || '[]');
-    existingAgents.push(agent);
-    localStorage.setItem('onboardedAgents', JSON.stringify(existingAgents));
-    
-    toast({
-      title: "Agent Onboarded Successfully!",
-      description: `${formData.name} has been added to the marketplace and is now available for hire.`,
-    });
-    
-    setFormData({
-      name: '',
-      specialty: '',
-      company: '',
-      description: '',
-      webhookUrl: '',
-      apiKey: ''
-    });
-    
-    navigate('/marketplace');
+    setIsLoading(true);
+
+    try {
+      const response = await fetch('/api/agents/onboard', {
+        method: 'POST',
+        headers: {
+          'Content-Type': 'application/json',
+        },
+        body: JSON.stringify(formData),
+      });
+
+      if (!response.ok) {
+        throw new Error('Failed to onboard agent');
+      }
+
+      const result = await response.json();
+      
+      toast({
+        title: "Agent Onboarded Successfully!",
+        description: `${formData.name} has been added to the marketplace and is now available for hire.`,
+      });
+      
+      setFormData({
+        name: '',
+        specialty: '',
+        company: '',
+        description: '',
+        webhookUrl: '',
+        contractVerificationUrl: '',
+        apiKey: ''
+      });
+      
+      navigate('/marketplace');
+    } catch (error) {
+      console.error('Onboard agent API failed, using fallback:', error);
+      
+      // Fallback to localStorage
+      const agent = {
+        ...formData,
+        id: Date.now(),
+        rating: 0,
+        reviews: 0,
+        timestamp: new Date().toISOString()
+      };
+      
+      const existingAgents = JSON.parse(localStorage.getItem('onboardedAgents') || '[]');
+      existingAgents.push(agent);
+      localStorage.setItem('onboardedAgents', JSON.stringify(existingAgents));
+      
+      toast({
+        title: "Agent Onboarded Successfully!",
+        description: `${formData.name} has been added to the marketplace (Demo Mode).`,
+      });
+      
+      setFormData({
+        name: '',
+        specialty: '',
+        company: '',
+        description: '',
+        webhookUrl: '',
+        contractVerificationUrl: '',
+        apiKey: ''
+      });
+      
+      navigate('/marketplace');
+    } finally {
+      setIsLoading(false);
+    }
   };
 
   return (
@@ -142,6 +184,18 @@ const OnboardAgent = () => {
               </div>
               
               <div className="space-y-2">
+                <Label htmlFor="contractVerification" className="text-white">Contract Signature Verification Endpoint</Label>
+                <Input
+                  id="contractVerification"
+                  type="url"
+                  value={formData.contractVerificationUrl}
+                  onChange={(e) => setFormData({...formData, contractVerificationUrl: e.target.value})}
+                  className="bg-gray-800 border-gray-600 text-white"
+                  placeholder="https://api.yourservice.com/verify-contract"
+                />
+              </div>
+              
+              <div className="space-y-2">
                 <Label htmlFor="apiKey" className="text-white">API Key</Label>
                 <Input
                   id="apiKey"
@@ -155,9 +209,10 @@ const OnboardAgent = () => {
               
               <Button 
                 type="submit" 
+                disabled={isLoading}
                 className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg py-3"
               >
-                Submit Agent for Marketplace
+                {isLoading ? 'Submitting...' : 'Submit Agent for Marketplace'}
               </Button>
             </form>
           </CardContent>

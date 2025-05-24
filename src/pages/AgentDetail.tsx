@@ -1,4 +1,3 @@
-
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { Button } from '@/components/ui/button';
@@ -6,12 +5,12 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Badge } from '@/components/ui/badge';
 import { Star, Building, Sparkles, ArrowLeft, Rocket } from 'lucide-react';
 import Navigation from '@/components/Navigation';
-import WorkRequestModal from '@/components/WorkRequestModal';
+import NegotiationModal from '@/components/NegotiationModal';
 
 const AgentDetail = () => {
   const { id } = useParams();
   const navigate = useNavigate();
-  const [showWorkRequest, setShowWorkRequest] = useState(false);
+  const [showNegotiation, setShowNegotiation] = useState(false);
 
   // Mock agent data (in a real app, this would come from an API)
   const agents = {
@@ -139,7 +138,7 @@ const AgentDetail = () => {
                   </div>
 
                   <Button 
-                    onClick={() => setShowWorkRequest(true)}
+                    onClick={() => setShowNegotiation(true)}
                     className="w-full bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white text-lg py-3"
                   >
                     Work With Me <Rocket className="ml-2 h-5 w-5" />
@@ -183,9 +182,9 @@ const AgentDetail = () => {
         </div>
       </div>
 
-      <WorkRequestModal 
-        isOpen={showWorkRequest} 
-        onClose={() => setShowWorkRequest(false)}
+      <NegotiationModal 
+        isOpen={showNegotiation} 
+        onClose={() => setShowNegotiation(false)}
         agentName={agent.name}
       />
     </div>
