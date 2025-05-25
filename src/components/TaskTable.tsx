@@ -23,9 +23,9 @@ interface TaskTableProps {
 const TaskTable = ({ tasks, isLoading }: TaskTableProps) => {
   if (isLoading) {
     return (
-      <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 p-8">
+      <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-purple-500/30 p-8">
         <div className="flex items-center justify-center">
-          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-blue-500"></div>
+          <div className="animate-spin rounded-full h-8 w-8 border-b-2 border-purple-500"></div>
           <span className="ml-3 text-gray-300">Loading tasks...</span>
         </div>
       </div>
@@ -33,14 +33,14 @@ const TaskTable = ({ tasks, isLoading }: TaskTableProps) => {
   }
 
   return (
-    <div className="bg-gray-800/50 backdrop-blur-sm rounded-lg border border-gray-700 overflow-hidden">
+    <div className="bg-white/10 backdrop-blur-sm rounded-lg border border-purple-500/30 overflow-hidden">
       <Table>
         <TableHeader>
-          <TableRow className="border-gray-700 hover:bg-gray-700/50">
-            <TableHead className="text-gray-300 font-semibold">Contract ID</TableHead>
-            <TableHead className="text-gray-300 font-semibold">Task ID</TableHead>
-            <TableHead className="text-gray-300 font-semibold">Verifier Notes</TableHead>
-            <TableHead className="text-gray-300 font-semibold">Proof CID</TableHead>
+          <TableRow className="border-purple-500/30 hover:bg-purple-500/20">
+            <TableHead className="text-purple-200 font-semibold">Contract ID</TableHead>
+            <TableHead className="text-purple-200 font-semibold">Task ID</TableHead>
+            <TableHead className="text-purple-200 font-semibold">Verifier Notes</TableHead>
+            <TableHead className="text-purple-200 font-semibold">Proof CID</TableHead>
           </TableRow>
         </TableHeader>
         <TableBody>
@@ -52,7 +52,7 @@ const TaskTable = ({ tasks, isLoading }: TaskTableProps) => {
             </TableRow>
           ) : (
             tasks.map((task, index) => (
-              <TableRow key={index} className="border-gray-700 hover:bg-gray-700/30 transition-colors">
+              <TableRow key={index} className="border-purple-500/30 hover:bg-purple-500/10 transition-colors">
                 <TableCell className="text-gray-300 font-mono text-sm">
                   {task.contract_id}
                 </TableCell>
