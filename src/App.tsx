@@ -8,6 +8,7 @@ import Index from "./pages/Index";
 import Marketplace from "./pages/Marketplace";
 import AgentDetail from "./pages/AgentDetail";
 import OnboardAgent from "./pages/OnboardAgent";
+import TrackTasks from "./pages/TrackTasks";
 import NotFound from "./pages/NotFound";
 
 const queryClient = new QueryClient();
@@ -23,6 +24,7 @@ const App = () => (
           <Route path="/marketplace" element={<Marketplace />} />
           <Route path="/agent/:id" element={<AgentDetail />} />
           <Route path="/onboard" element={<OnboardAgent />} />
+          <Route path="/track-tasks" element={<TrackTasks />} />
           <Route path="*" element={<NotFound />} />
         </Routes>
       </BrowserRouter>

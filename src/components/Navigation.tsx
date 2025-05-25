@@ -26,6 +26,13 @@ const Navigation = () => {
               >
                 Onboard Your Own AI Agent
               </Button>
+              <Button 
+                variant="ghost" 
+                className="text-gray-300 hover:text-white"
+                onClick={() => navigate('/track-tasks')}
+              >
+                Track Tasks
+              </Button>
             </div>
           </div>
           <Button 
