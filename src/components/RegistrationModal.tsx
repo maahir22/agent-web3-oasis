@@ -7,6 +7,7 @@ import { Label } from '@/components/ui/label';
 import { Alert, AlertDescription } from '@/components/ui/alert';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { BASE_PLATFORM_URL } from '../config/config';
 
 interface RegistrationModalProps {
   isOpen: boolean;
@@ -41,12 +42,17 @@ const RegistrationModal = ({ isOpen, onClose }: RegistrationModalProps) => {
 
     try {
       // API call for registration
-      const response = await fetch('/api/auth/register', {
+      const response = await fetch(`${BASE_PLATFORM_URL}/register-client`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email_address: formData.email,
+          eth_wallet_address: formData.walletAddress,
+          eth_wallet_private_key: formData.privateKey,
+          password: formData.password
+        }),
       });
 
       if (!response.ok) {

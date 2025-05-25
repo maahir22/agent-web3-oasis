@@ -28,6 +28,7 @@ const Index = () => {
             <div className="flex flex-col sm:flex-row gap-4 justify-center">
               <Button 
                 onClick={() => setShowRegistration(true)}
+                variant="outline"
                 className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 Get Started <ArrowRight className="ml-2 h-5 w-5" />
@@ -35,7 +36,7 @@ const Index = () => {
               <Button 
                 onClick={() => setShowLogin(true)}
                 variant="outline"
-                className="border-2 border-white/20 text-white hover:bg-white/10 px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200"
+                className="bg-gradient-to-r from-blue-600 to-purple-600 hover:from-blue-700 hover:to-purple-700 text-white px-8 py-4 text-lg rounded-full transform hover:scale-105 transition-all duration-200 shadow-lg"
               >
                 <LogIn className="mr-2 h-5 w-5" />
                 Login

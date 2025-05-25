@@ -1,0 +1,1 @@
+export const BASE_PLATFORM_URL = 'http://localhost:3001';

@@ -6,6 +6,7 @@ import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { useToast } from '@/hooks/use-toast';
 import { useNavigate } from 'react-router-dom';
+import { BASE_PLATFORM_URL } from '../config/config';
 
 interface LoginModalProps {
   isOpen: boolean;
@@ -36,15 +37,19 @@ const LoginModal = ({ isOpen, onClose }: LoginModalProps) => {
     setIsLoading(true);
 
     try {
-      const response = await fetch('/api/auth/login', {
+      const response = await fetch(`${BASE_PLATFORM_URL}/login`, {
         method: 'POST',
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData),
+        body: JSON.stringify({
+          email_address: formData.email,
+          password: formData.password,
+        }),
       });
 
       if (!response.ok) {
+        console.error('Login API failed:', response.statusText);
         throw new Error('Login failed');
       }
 
